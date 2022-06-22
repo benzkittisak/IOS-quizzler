@@ -18,9 +18,9 @@ class ViewController: UIViewController {
     
 //    คำถามที่มีในแอปเปอพึด
     let quiz = [
-        "Four + Two is equal to Six.",
-        "Fix - Three is greater than One",
-        "Three + Eight is less than Ten"
+        ["Four + Two is equal to Six." ,"True"],
+        ["Fix - Three is greater than One" , "True"],
+        ["Three + Eight is less than Ten" , "False"]
     ]
 //    เอามาเช็คว่าคำถามไหนอ่านไปแล้วบ้าง
     var questionNumber = 0
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     }
     
     func updateUI(){
-        questionLB.text = quiz[questionNumber]
+        questionLB.text = quiz[questionNumber][0]
     }
     
 }
