@@ -49,6 +49,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         //        questionLB.text = quiz[questionNumber]
+
         updateUI()
     }
     
@@ -58,6 +59,7 @@ class ViewController: UIViewController {
         let actualAnswer = quiz[questionNumber].answer
         
         if userAnswer == actualAnswer {
+
             sender.backgroundColor = UIColor.green
         } else {
             sender.backgroundColor = UIColor.red
@@ -84,6 +86,7 @@ class ViewController: UIViewController {
         questionLB.text = quiz[questionNumber].text
         trueBtn.backgroundColor = UIColor.clear
         falseBtn.backgroundColor = UIColor.clear
+        progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
     }
     
 }
