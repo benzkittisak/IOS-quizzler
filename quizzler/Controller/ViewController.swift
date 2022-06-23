@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var trueBtn: UIButton!
     @IBOutlet weak var falseBtn: UIButton!
     
+//    เรียกใช้งาน QuizBrain
+    var quizBrain = QuizBrain()
+    
     //    คำถามที่มีในแอปเปอพึด ย้ายเจ้านี่ไปเป็น structure แหละอยู่ในไฟล์ Question
 //    let quiz = [
 //        ["Four + Two is equal to Six." ,"True"],
@@ -24,6 +27,8 @@ class ViewController: UIViewController {
 //    ]
     
 //    จะได้โค้ดข้างบนใหม่แบบนี้ จะได้เป็น Array ของ Object Question แทนที่จะเป็น Array 2D
+//    ทำการย้าย โค้ดล่างนี้ไปที่ QuizBrain.swift แหละ
+    /*
     let quiz = [
         Question(question: "A slug's blood is green.", answer: "True"),
         Question(question: "Approximately one quarter of human bones are in the feet.", answer: "True"),
@@ -38,10 +43,12 @@ class ViewController: UIViewController {
         Question(question: "No piece of square dry paper can be folded in half more than 7 times.", answer: "False"),
         Question(question: "Chocolate affects a dog's heart and nervous system; a few ounces are enough to kill a small dog.", answer: "True")
     ]
+     */
     
 
     //    เอามาเช็คว่าคำถามไหนอ่านไปแล้วบ้าง
-    var questionNumber = 0
+//    ย้ายน้องคนนี้ไปที่ QuizBrain.swift เหมือนกัล
+//    var questionNumber = 0
     
     var timer = Timer()
     
@@ -56,10 +63,13 @@ class ViewController: UIViewController {
     @IBAction func anwserButtonPressed(_ sender: UIButton) {
         //        ทำส่วนของการตรวจสอบคำตอบด้วยการรับมาก่อนว่า user กดปุ่มอะไรมา
         guard let userAnswer = sender.currentTitle else { return print("Error the answer is nil") }
-        let actualAnswer = quiz[questionNumber].answer
         
-        if userAnswer == actualAnswer {
-
+        let checkAnswer = quizBrain.checkAnswer(userAnswer)
+        
+//        ย้ายน้องคนนี้ไปที่ QuizBrain เหมือนกัน
+//        let actualAnswer = quiz[questionNumber].answer
+        
+        if checkAnswer {
             sender.backgroundColor = UIColor.green
         } else {
             sender.backgroundColor = UIColor.red
@@ -67,11 +77,14 @@ class ViewController: UIViewController {
         
         //        แก้ปัญหาเรื่องของจำนวนข้อมันเกินขนาดของ Array
         //        คือต้อง - 1 เพราะว่าไม่งั้นมันจะทำให้ Array เกินขนาดอีกเพราะว่าสมมติมันเป็นเลข 2 แล้วมันเข้ามาทำงานแล้วบวกเป็น 3 มันก้พังอีกเช่นเคย
+//        ย้ายน้องไปที่ QuizBrain เหมือนกัล
+        /*
         if questionNumber < quiz.count - 1  {
             questionNumber += 1
         } else {
             questionNumber = 0
-        }
+        }*/
+        quizBrain.nextQuestion()
         
         //        ทีนี้ก็พอเค้ากดตุ่ม ทรูหรือฟอลมาก็ให้คำถามมันเพิ่มตำแหน่งไป
         //        questionNumber += 1  // แต่จะมีปัญหาเรื่องอาเรย์เกินขนาด
@@ -83,10 +96,12 @@ class ViewController: UIViewController {
     }
     
     @objc func updateUI(){
-        questionLB.text = quiz[questionNumber].text
+//        questionLB.text = quiz[questionNumber].text
+        questionLB.text = quizBrain.getQuestionText()
         trueBtn.backgroundColor = UIColor.clear
         falseBtn.backgroundColor = UIColor.clear
-        progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
+//        progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
+        progressBar.progress = quizBrain.getProgress()
     }
     
 }
