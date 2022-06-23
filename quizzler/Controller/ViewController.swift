@@ -10,13 +10,15 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var questionLB: UILabel!
+    @IBOutlet weak var scoreLB: UILabel!
     
     @IBOutlet weak var progressBar: UIProgressView!
     
-    @IBOutlet weak var trueBtn: UIButton!
-    @IBOutlet weak var falseBtn: UIButton!
-    
-//    เรียกใช้งาน QuizBrain
+    @IBOutlet weak var choiceBtn1: UIButton!
+    @IBOutlet weak var choiceBtn2: UIButton!
+    @IBOutlet weak var choiceBtn3: UIButton!
+   
+    //    เรียกใช้งาน QuizBrain
     var quizBrain = QuizBrain()
     
     //    คำถามที่มีในแอปเปอพึด ย้ายเจ้านี่ไปเป็น structure แหละอยู่ในไฟล์ Question
@@ -56,7 +58,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         //        questionLB.text = quiz[questionNumber]
-
+        
         updateUI()
     }
     
@@ -98,10 +100,18 @@ class ViewController: UIViewController {
     @objc func updateUI(){
 //        questionLB.text = quiz[questionNumber].text
         questionLB.text = quizBrain.getQuestionText()
-        trueBtn.backgroundColor = UIColor.clear
-        falseBtn.backgroundColor = UIColor.clear
+        
+        choiceBtn1.setTitle(quizBrain.getAnswerText()[0], for: .normal)
+        choiceBtn2.setTitle(quizBrain.getAnswerText()[1], for: .normal)
+        choiceBtn3.setTitle(quizBrain.getAnswerText()[2], for: .normal)
+        
+        choiceBtn1.backgroundColor = UIColor.clear
+        choiceBtn2.backgroundColor = UIColor.clear
+        choiceBtn3.backgroundColor = UIColor.clear
 //        progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
         progressBar.progress = quizBrain.getProgress()
+        
+        scoreLB.text = "Score : \(quizBrain.getScore())"
     }
     
 }
